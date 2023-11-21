@@ -1,46 +1,91 @@
-# Getting Started with Create React App
+# Cognito Education
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple React application for a basic supermarket website. It fetches a list of products from an API endpoint and displays them on the website. The application includes components for the header, product list, product details, and a basket. State management is implemented to allow users to add products to the basket and maintain the state between page refreshes.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Installation](#installation)
+2. [Folder Structure](#folder-structure)
+3. [Component Architecture](#component-architecture)
+4. [State Management](#state-management)
+5. [Styling](#styling)
+6. [Testing](#testing)
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To set up the project locally, follow these steps:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+# Clone the repository
+git clone https://github.com/HermonSolomon/cognito-education.git
 
-### `npm test`
+# Navigate to the project directory
+cd cognito-education
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Install dependencies
+npm install
+```
 
-### `npm run build`
+## Folder Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This app uses modular approach in organising the folder structure. The UI is split from the business logic for better readability and maintenance
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+src/
+|-- components/
+   |-- Cart/
+       |--Cart.tsx
+   |-- Header/
+       |--Header.tsx
+   |-- Home/
+       |--Home.tsx
+   |-- ProductCard/
+       |--ProductCard.tsx
+       |--ProductCard.spec.tsx
+   |-- ProductDetail/
+       |--ProductDetail.tsx
+   |-- RootLayout/
+       |--RootLayout.tsx
+|-- mocks/
+    |-- mockGroceriesData.js
+|-- store/
+    |-- store.ts
+    |-- cartSlice
+        |-- cartSlice.spec.tsx
+        |-- cartSlice.tsx
+    |-- ProductSlice
+        |-- productSlice.spec.tsx
+        |-- productSlice.tsx
+|-- test-util.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+## Component Architecture
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The supermarket website is built with the following components:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Header**: Displays the logo and navigation links.
+- **Product List**: Displays a list of products retrieved from the API.
+- **Product Detail**: Displays details of a selected product.
+- **Cart**: Displays items added to the basket including the amount.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## State Management
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+State management is implemented using Redux Toolkit. Users can add products to the basket, and the application maintains the state between page refreshes. It's worth noting that, while the size and complexity of the application might have allowed for the use of React's built-in Context for this particular task, the deliberate selection of Redux serves to demonstrate a broader understanding of state management, particularly in the context of larger and more intricate applications.
 
-## Learn More
+## Styling
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The components are styled using the Tailwind CSS framework for simplicity and ease of use. The styling is responsive, adhering to design principles for both desktop and mobile screens.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Testing
+
+Unit tests are written for one of the components using Jest and React Testing Library. The tests cover both the rendering and behavior of the component.
+
+Within the `test-util.js` file, a documentation wrapper from the Redux Docs has been leveraged to enhance the React Testing Library (RTL) render method. This wrapper facilitates the provision of a reusable store for testing. Modifications have been made to the original implementation, exporting the store directly from our wrapper file and overriding the RTL render method to ensure seamless integration with a reusable store for testing.
+
+It's crucial to emphasise that this approach is particularly beneficial when testing components reliant on the Redux store, such as `ProductCard.tsx` and `Cart.tsx`. The wrapper plays a pivotal role in overriding the default reducer method, enabling the comprehensive testing of our components while maintaining a streamlined and effective testing environment.
+
+```bash
+# Run unit tests
+npm run test
+```
